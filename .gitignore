@@ -1,0 +1,5 @@
+/runs
+/__pycache__
+/letters
+/letters_cleaned
+/cnn.pth
