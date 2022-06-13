@@ -1,3 +1,4 @@
+from cProfile import label
 from PIL import Image
 import torch
 import numpy as np
@@ -24,7 +25,7 @@ model.to(device)
 
 epochs = 100
 
-continue_training = False
+continue_training = True
 
 if continue_training:
     checkpoint = torch.load("cnn.pth")
@@ -73,5 +74,18 @@ def train(epochs):
         writer.add_scalar("train_loss", torch.tensor(epoch_train_loss), epoch)
         plt.savefig("loss.png")
 
+def test():
+    model.eval()
+    losses = []
+    accuracies = []
+    with torch.no_grad():
+        print("Testing")
+        for batch, labels in tqdm(test_loader):
+            out = model(batch)
+            losses.append(criterion(out, labels))
+            accuracies.append(accuracy_score(torch.max(out.data, 1)[1], labels))
+        print(np.mean(losses))
+        print(np.mean(accuracies))
 if __name__ == '__main__':
-    train(epochs)
+    train(5)
+    test()

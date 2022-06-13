@@ -48,7 +48,7 @@ train_split = 0.8
 
 indices = torch.randperm(len(lettersDataset)).tolist()
 train_dataset = torch.utils.data.Subset(lettersDataset, indices[:int(len(lettersDataset) * 0.9)])
-test_dataset = torch.utils.data.Subset(lettersDataset, indices[:int(len(lettersDataset) * 0.9):])
+test_dataset = torch.utils.data.Subset(lettersDataset, indices[int(len(lettersDataset) * 0.9):])
 
 
 train_loader = DataLoader(
